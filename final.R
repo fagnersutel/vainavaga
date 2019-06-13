@@ -17,7 +17,7 @@ library(yaml)
 setwd("~/R-files/vainavaga/")
 
 base <- read.csv('tipoSinal.csv', header = TRUE, sep = ";", fileEncoding = "UTF-8")
-names(base) <- c("lat", "long", "depth", "mag", "stations", "pontoVagas")
+names(base) <- c("lat", "long", "depth", "mag", "stations")
 base$mag <- as.numeric(base$mag)
 dfbase <- base
 names(dfbase)
@@ -57,22 +57,22 @@ icons <- awesomeIcons(
   markerColor = getColor(dfbase)
 )
 leaflet(dfbase) %>% addTiles() %>% 
-  addAwesomeMarkers(~long, ~lat, icon=icons, label=~as.character(paste(mag, stations, depth, "Vagas:", pontoVagas, sep = ", ")), clusterOptions = markerClusterOptions())
+  addAwesomeMarkers(~long, ~lat, icon=icons, label=~as.character(paste(mag, stations, depth,sep = ", ")), clusterOptions = markerClusterOptions())
 
 
 
 leafIcons <- icons(
   sapply(base$mag, function(mag) {
     if(mag <= 1) {
-      "img/1.png"
+      "img/13.png"
     } else if(mag <= 2) {
-      "img/2.png"
+      "img/13.png"
     } else if(mag <= 3) {
-      "img/3.png"
+      "img/13.png"
     } else if(mag <= 4) {
-      "img/4.png"
+      "img/13.png"
     } else if(mag <= 5) {
-      "img/5.png"
+      "img/13.png"
     } else if(mag <= 6) {
       "img/6.png"
     } else if(mag <= 7) {
@@ -113,7 +113,13 @@ leafIcons <- icons(
 
 
 leaflet(dfbase) %>% addTiles() %>% 
-  addMarkers(~long, ~lat, icon=leafIcons, label=~as.character(paste( stations,",", depth,",", pontoVagas,"Vagas", sep = " ")), clusterOptions = markerClusterOptions())
+  addMarkers(~long, ~lat, icon=leafIcons, label=~as.character(paste( stations,",", depth,",", sep = " ")), clusterOptions = markerClusterOptions())
+
+
+
+leaflet(dfbase) %>% addTiles() %>% 
+  addMarkers(~long, ~lat, icon=leafIcons, label=~as.character(paste( stations,",", depth,",", sep = " ")))
+
 
 
 leaflet(dfbase) %>% addTiles() %>% 
